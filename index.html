@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Document</title>
+  <script>
+    /* API */
+    const api = {
+      _baseURL: 'https://us-central1-ss-devops.cloudfunctions.net/',
+      _headers: {
+
+      },
+      get: function (uri, config = {}) {
+        return new Promise((resolve, reject) => {
+          fetch(`${this._baseURL}${uri}`, { headers: this._headers, ...config })
+            .then(body => {
+              return body.json()
+            })
+            .then(data => {
+              if (!data.StatusCode) {
+                return resolve(data)
+              }
+              throw data
+            })
+            .catch(error => {
+              return reject(error)
+            })
+        })
+      }
+    }
+    /* end API */
+
+
+    /* LED logic */
+    const enumNumbers = {
+      0: 'zero',
+      1: 'one',
+      2: 'two',
+      3: 'three',
+      4: 'four',
+      5: 'five',
+      6: 'six',
+      7: 'seven',
+      8: 'eight',
+      9: 'nine'
+    }
+
+    function getNumbers(value, theme) {
+      const numbers = String(value).split('')
+
+      const numbersHtmlElements = numbers.map(number => {
+        return `<img src='./svg/digit/${theme}/${enumNumbers[number]}.svg' alt='${enumNumbers[number]}'/>`
+      })
+
+      return numbersHtmlElements.join('')
+    }
+
+    async function getRandomNumber() {
+      try {
+        const { value } = await api.get('rand?min=1&max=300')
+
+        return value
+      } catch (error) {
+        throw error
+      }
+    }
+    /* end LED logic */
+
+    /* utils functions */
+    function disableForm(element, disabled) {
+      Array.from(element.children).forEach(child => {
+        if (child.children.length > 0) {
+          return disableForm(child, disabled)
+        } else {
+          if (['INPUT', 'BUTTON'].indexOf(child.nodeName) !== -1) {
+            if (disabled) {
+              child.setAttribute('disabled', 'disabled')
+            } else {
+              child.removeAttribute('disabled')
+            }
+          }
+        }
+      })
+    }
+    /* end utils functions */
+
+    window.onload = async () => {
+      const guessForm = document.getElementById('gameForm')
+      const guessResult = document.getElementById('gameResult')
+      const guessReset = document.createElement('button')
+      guessReset.innerHTML = 'Nova Partida'
+
+      let guessMessage = ''
+      let guessNumber = 0
+      let randomNumber = 0
+      let disabledGuess = false
+      let digitTheme = ''
+
+      try {
+        randomNumber = await getRandomNumber()
+        disabledGuess = false
+        disableForm(guessForm, false)
+        digitTheme = 'primary'
+        guessNumber = 0
+      } catch (error) {
+        randomNumber = error.StatusCode
+        disabledGuess = true
+        disableForm(guessForm, true)
+        digitTheme = 'error'
+        guessNumber = error.StatusCode
+      }
+
+      guessResult.innerHTML = `<div>
+        <p>${getNumbers(guessNumber, digitTheme)}</p>
+      </div>`
+
+      if (disabledGuess) {
+        guessResult.appendChild(guessReset)
+      }
+
+      guessForm.addEventListener('submit', e => {
+        e.preventDefault()
+
+        const formData = new FormData(guessForm)
+        const guessNumber = formData.get('guess')
+        let gotTheResult = false
+
+        if (guessNumber > randomNumber) {
+          guessMessage = "É menor"
+        } else if (guessNumber < randomNumber) {
+          guessMessage = "É maior"
+        } else {
+          guessMessage = 'Acertou!'
+        }
+
+        guessForm.reset()
+        gotTheResult = guessMessage === 'Acertou!'
+        digitTheme = gotTheResult ? 'success' : digitTheme
+
+        guessResult.innerHTML = `<div>
+          <p>${guessMessage}</p>
+          <p>${getNumbers(guessNumber, digitTheme)}</p>
+        </div>`
+
+        if (gotTheResult) {
+          guessResult.appendChild(guessReset)
+        }
+      })
+
+      guessReset.addEventListener('click', async () => {
+        try {
+          randomNumber = await getRandomNumber()
+          disabledGuess = false
+          disableForm(guessForm, false)
+          digitTheme = 'primary'
+          guessNumber = 0
+        } catch (error) {
+          randomNumber = error.StatusCode
+          disabledGuess = true
+          disableForm(guessForm, true)
+          digitTheme = 'error'
+          guessNumber = error.StatusCode
+        }
+
+        guessResult.innerHTML = `<div>
+        <p>${getNumbers(0, digitTheme)}</p>
+      </div>`
+      })
+    }
+  </script>
+</head>
+
+<body>
+  <main>
+    <header>
+      <h1>QUAL É O NÚMERO</h1>
+    </header>
+    <article id="gameResult">
+      <div>
+        <p></p>
+        <p></p>
+      </div>
+    </article>
+    <footer>
+      <form id="gameForm">
+        <div>
+          <input type="number" name="guess" placeholder="Digite o palpite" min="1" max="300">
+          <button>ENVIAR</button>
+        </div>
+      </form>
+    </footer>
+  </main>
+</body>
+
+</html>

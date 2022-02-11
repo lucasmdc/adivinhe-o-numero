@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:before,
+:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 1rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+main {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100vh;
+  width: 100%;
+  padding: 32px 16px;
+}
+
+article {
+  flex: 1;
+}
+
+form div {
+  display: flex;
+}
+
+form div input:not([type='button']) {
+  flex: 1
+}
+
+form button {
+  margin-left: 8px;
+}
+
+#guessResult > * {
+  display: flex;
+  flex-flow: row wrap;
+  height: 144px;
+}
+
+#guessResult > * > * {
+  width: 100%;
+}
+
+#guessResult > * > *:last-child {
+  align-self: flex-end;
+}
+
