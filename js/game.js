@@ -25,7 +25,7 @@ window.onload = async () => {
   }
 
   result.innerHTML = `<div>
-        <p>${getNumbers(guess, digitTheme)}</p>
+        <p>${getNumber(guess, digitTheme)}</p>
       </div>`
 
   if (isDisableForm) {
@@ -53,7 +53,7 @@ window.onload = async () => {
 
     result.innerHTML = `<div>
           <p>${message}</p>
-          <p>${getNumbers(_guess, digitTheme)}</p>
+          <p>${getNumber(_guess, digitTheme)}</p>
         </div>`
 
     if (gotTheResult) {
@@ -77,7 +77,7 @@ window.onload = async () => {
     }
 
     result.innerHTML = `<div>
-        <p>${getNumbers(guess, digitTheme)}</p>
+        <p>${getNumber(guess, digitTheme)}</p>
       </div>`
   })
 }

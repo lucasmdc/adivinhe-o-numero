@@ -1,4 +1,4 @@
-const enumNumbers = {
+const numbers = {
   0: 'zero',
   1: 'one',
   2: 'two',
@@ -11,14 +11,16 @@ const enumNumbers = {
   9: 'nine'
 }
 
-function getNumbers(value, theme) {
-  const numbers = String(value).split('')
+function getNumber(value, theme) {
+  const number = String(value).split('')
 
-  const numbersHtmlElements = numbers.map(number => {
-    return `<img src='./svg/digit/${theme}/${enumNumbers[number]}.svg' alt='${enumNumbers[number]}'/>`
-  })
+  return number.map(digit => {
+    return `
+      <img src='./svg/digit/${theme}/${numbers[digit]}.svg' 
+        alt='${numbers[digit]}'/>
+    `
+  }).join('')
 
-  return numbersHtmlElements.join('')
 }
 
 async function getRandomNumber() {
