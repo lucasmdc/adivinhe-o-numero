@@ -1,66 +1,83 @@
 window.onload = async () => {
   const form = document.getElementById('gameForm')
   const result = document.getElementById('gameResult')
-  const reset = createReset()
+  const reset = document.createElement('button')
+  reset.innerHTML = 'Nova Partida'
 
   let message = ''
+  let guess = 0
   let randomNumber = 0
-  let disableForm = false
+  let isDisableForm = false
+  let digitTheme = ''
 
-  await load()
-  createOrUpdateGameDisplay(disableForm)
-
-  function createReset() {
-    const _reset = document.createElement('button')
-    reset.innerHTML = 'Nova Partida'
-
-    return _reset
+  try {
+    randomNumber = await getRandomNumber()
+    isDisableForm = false
+    disableForm(form, false)
+    digitTheme = 'primary'
+    guess = 0
+  } catch (error) {
+    randomNumber = error.StatusCode
+    isDisableForm = true
+    disableForm(form, true)
+    digitTheme = 'error'
+    guess = error.StatusCode
   }
 
-  async function load() {
-    try {
-      randomNumber = await getRandomNumber()
-      disableForm = false
-      disableForm(form, false)
-    } catch (error) {
-      randomNumber = error.StatusCode
-      disableForm = true
-      disableForm(form, true)
-    }
-  }
+  result.innerHTML = `<div>
+        <p>${getNumbers(guess, digitTheme)}</p>
+      </div>`
 
-  function createOrUpdateGameDisplay(props) {
-    const displayReset = props.displayReset || false
-
-    result.innerHTML = `<div>
-      ${message ? `<p>${message}</p>` : ''}
-      <p>${getNumbers(randomNumber)}</p>
-    </div>`
-
-    if (displayReset) {
-      result.appendChild(reset)
-    }
+  if (isDisableForm) {
+    result.appendChild(reset)
   }
 
   form.addEventListener('submit', e => {
     e.preventDefault()
 
     const formData = new FormData(form)
-    const guessNumber = formData.get('guess')
+    const _guess = formData.get('guess')
+    let gotTheResult = false
 
-    if (guessNumber > randomNumber) {
+    if (_guess > randomNumber) {
       message = "É menor"
-    } else if (guessNumber < randomNumber) {
+    } else if (_guess < randomNumber) {
       message = "É maior"
     } else {
       message = 'Acertou!'
     }
 
-    createOrUpdateGameDisplay(message === 'Acertou!')
+    form.reset()
+    gotTheResult = message === 'Acertou!'
+    digitTheme = gotTheResult ? 'success' : digitTheme
+
+    result.innerHTML = `<div>
+          <p>${message}</p>
+          <p>${getNumbers(_guess, digitTheme)}</p>
+        </div>`
+
+    if (gotTheResult) {
+      result.appendChild(reset)
+    }
   })
 
   reset.addEventListener('click', async () => {
-    await load()
-    createOrUpdateGameDisplay()
+    try {
+      randomNumber = await getRandomNumber()
+      isDisableForm = false
+      disableForm(form, false)
+      digitTheme = 'primary'
+      guess = 0
+    } catch (error) {
+      randomNumber = error.StatusCode
+      isDisableForm = true
+      disableForm(form, true)
+      digitTheme = 'error'
+      guess = error.StatusCode
+    }
+
+    result.innerHTML = `<div>
+        <p>${getNumbers(guess, digitTheme)}</p>
+      </div>`
   })
 }

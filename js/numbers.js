@@ -11,11 +11,11 @@ const enumNumbers = {
   9: 'nine'
 }
 
-function getNumbers(value) {
+function getNumbers(value, theme) {
   const numbers = String(value).split('')
 
   const numbersHtmlElements = numbers.map(number => {
-    return `<img src='./svg/${enumNumbers[number]}.svg' alt='${enumNumbers[number]}'/>`
+    return `<img src='./svg/digit/${theme}/${enumNumbers[number]}.svg' alt='${enumNumbers[number]}'/>`
   })
 
   return numbersHtmlElements.join('')
