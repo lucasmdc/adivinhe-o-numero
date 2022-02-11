@@ -10,19 +10,7 @@ window.onload = async () => {
   let isDisableForm = false
   let digitTheme = ''
 
-  try {
-    randomNumber = await getRandomNumber()
-    isDisableForm = false
-    disableForm(form, false)
-    digitTheme = 'primary'
-    guess = 0
-  } catch (error) {
-    randomNumber = error.StatusCode
-    isDisableForm = true
-    disableForm(form, true)
-    digitTheme = 'error'
-    guess = error.StatusCode
-  }
+  await start()
 
   result.innerHTML = `<div>
         <p>${getNumber(guess, digitTheme)}</p>
@@ -62,6 +50,14 @@ window.onload = async () => {
   })
 
   reset.addEventListener('click', async () => {
+    await start()
+
+    result.innerHTML = `<div>
+        <p>${getNumber(guess, digitTheme)}</p>
+      </div>`
+  })
+
+  async function start() {
     try {
       randomNumber = await getRandomNumber()
       isDisableForm = false
@@ -69,15 +65,10 @@ window.onload = async () => {
       digitTheme = 'primary'
       guess = 0
     } catch (error) {
-      randomNumber = error.StatusCode
+      randomNumber, guess = error.StatusCode
       isDisableForm = true
       disableForm(form, true)
       digitTheme = 'error'
-      guess = error.StatusCode
     }
-
-    result.innerHTML = `<div>
-        <p>${getNumber(guess, digitTheme)}</p>
-      </div>`
-  })
+  }
 }
