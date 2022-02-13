@@ -1,8 +1,10 @@
+/* CSS Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   outline: none;
+  font-family: inherit;
 }
 
 :before,
@@ -31,7 +33,7 @@ input:not([disabled]):hover {
 }
 
 input[disabled] {
-  background-color: F5F5F5;
+  background-color: #F5F5F5;
   cursor: not-allowed;
 }
 
@@ -50,59 +52,19 @@ button {
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 2;
-  padding: 7px 12px;
+  padding: 9px 12px;
+}
+
+button > * {
+  display: flex;
+  justify-content: center;
 }
 
 body {
   color: #222;
-  font-size: 1rem;
   font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-}
-
-header {
-  margin-top: 30px;
-}
-
-h1 {
-  font-size: 1.5rem;
-  line-height: 2.125rem;
-  padding-bottom: 8px;
-  position: relative;
-  text-align: center;
-  margin: auto;
-  width: 265px;
-}
-
-h1:after {
-  background-color: #CFCFCF;
-  bottom: 0;
-  content: '';
-  height: 1px;
-  left: 50%;
-  position: absolute;
-  transform: translateX(-50%);
-  width: calc(100% - 42px);
-}
-
-h4 {
   font-size: 1rem;
-  line-height: 2;
-}
-
-main {
-  display: flex;
-  flex-flow: column nowrap;
-  height: 100vh;
-  width: 100%;
-  padding: 32px 16px;
-}
-
-article {
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  display: flex;
+  font-weight: 400;
 }
 
 form div {
@@ -113,31 +75,13 @@ form div input:not([type='button']) {
   flex: 1
 }
 
-form button {
-  margin-left: 8px;
+form div > *:not(:last-child) {
+  margin-right: 8px;
 }
 
-#gameResult > * {
-  display: flex;
-  flex-flow: row wrap;
-  height: 144px;
-  margin-bottom: 48px;
-  text-align: center;
-}
+/* ====== */
 
-#gameResult > * > * {
-  width: 100%;
-}
-
-#gameResult > * > *:last-child {
-  align-self: flex-end;
-}
-
-footer {
-  width: 300px;
-  margin: auto;
-}
-
+/* Themes */
 .error--color {
   color: #CC3300;
 }
@@ -149,8 +93,9 @@ footer {
 .primary--color {
   color: #FF6600;
 }
+/* ====== */
 
-
+/* icon CSS classes */
 .icon {
   background-repeat: no-repeat;
   background-position: center;
@@ -163,14 +108,103 @@ footer {
 .icon--reset {
   background-image: url('./svg/icon/refresh.svg');
 }
+/* ====== */
 
-.reset {
-  background-image: linear-gradient(to bottom, #434854, #9E9E9E);
+/* flex items CSS classes */
+.flex-start {
+  align-self: flex-start;
 }
 
-button > * {
+.flex-end {
+  align-self: flex-end;
+}
+/* ====== */
+
+/* Commom CSS classes */
+.page {
   display: flex;
-  justify-content: center;
+  flex-flow: column nowrap;
+  height: 100vh;
+  width: 100%;
+  padding: 32px 16px;
 }
 
+.page__header {
+  margin-top: 30px;
+}
 
+.page__title {
+  background-image: linear-gradient(to bottom, #EF6C00, #C0661C);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  -moz-text-fill-color: transparent;
+  font-size: 1.5rem;
+  line-height: 2.125rem;
+  margin: auto;
+  padding: 8px 0;
+  position: relative;
+  text-align: center;
+  width: 265px;
+}
+
+.page__title:after {
+  background-color: #CFCFCF;
+  bottom: 0;
+  content: '';
+  height: 1px;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+  width: calc(100% - 42px);
+}
+
+.page__footer {
+  width: 300px;
+  margin: auto;
+}
+/* ====== */
+
+.game-result {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.game-result__content {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.game-result__content > * {
+  width: 100%;
+}
+
+.game-result__content .numbers {
+  padding: 26px 0 56px;
+}
+
+.game-result__message {
+  font-size: 1rem;
+  line-height: 2;
+}
+
+.game-result__reset {
+  background-image: linear-gradient(to bottom, #434854, #9E9E9E);
+  width: 132px;
+}
+
+@media screen and (min-width: 768px) {
+  .page__title {
+    font-size: 2.25rem;
+    width: 398px;
+  }
+
+  .game-result .numbers img {
+    width: 74px;
+  }
+}

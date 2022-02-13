@@ -1,8 +1,6 @@
 const api = {
   _baseURL: 'https://us-central1-ss-devops.cloudfunctions.net/',
-  _headers: {
-
-  },
+  _headers: {},
   get: function (uri, config = {}) {
     return new Promise((resolve, reject) => {
       fetch(`${this._baseURL}${uri}`, { headers: this._headers, ...config })

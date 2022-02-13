@@ -1,9 +1,9 @@
 window.onload = () => {
   const form = document.getElementById('gameForm')
   const reset = Button({
-    label: 'Nova Partida',
+    label: 'NOVA PARTIDA',
     icon: 'reset',
-    classes: ['reset']
+    classes: ['game-result__reset', 'flex-end']
   })
   const [state, setState] = useState({
     guess: '',
@@ -18,7 +18,7 @@ window.onload = () => {
   async function start() {
     await init()
     updateDisplay({
-      injectHTML: state.message && [`<h4>${state.message}</h4>`],
+      injectHTML: state.message && [`<h4 class='game-result__message flex-start'>${state.message}</h4>`],
       injectNodes: state.isDisableForm && [reset]
     })
   }
@@ -52,9 +52,9 @@ window.onload = () => {
     const injectNodes = _props.injectNodes || []
     const injectHTML = _props.injectHTML || []
 
-    ref.innerHTML = `<div class='${state.theme}--color'>
+    ref.innerHTML = `<div class='game-result__content ${state.theme}--color'>
         ${injectHTML.length > 0 ? injectHTML.join('') : ''}
-        <p>${getNumber(state.guess, state.theme)}</p>
+        <p class="numbers">${getNumber(state.guess, state.theme)}</p>
       </div>`
 
     if (injectNodes.length > 0) {
@@ -96,7 +96,7 @@ window.onload = () => {
     })
 
     updateDisplay({
-      injectHTML: [`<h4>${state.message}</h4>`],
+      injectHTML: [`<h4 class='game-result__message flex-start'>${state.message}</h4>`],
       injectNodes: gotTheResult && [reset]
     })
 

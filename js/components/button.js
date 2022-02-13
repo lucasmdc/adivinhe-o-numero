@@ -12,7 +12,7 @@ function Button(props) {
   </p>`
 
   if (classes.length > 0) {
-    button.classList.add(classes.join(' '))
+    button.classList.add(...classes)
   }
 
   return button
