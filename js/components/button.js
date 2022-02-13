@@ -1,8 +1,19 @@
 function Button(props) {
   const label = props.label || ''
+  const icon = props.icon || ''
+  const classes = props.classes || []
 
-  const _reset = document.createElement('button')
-  _reset.innerHTML = label
+  const button = document.createElement('button')
+  button.innerHTML = `<p>
+    ${icon &&
+    `<i class='icon icon--${icon}'></i>`
+    }
+    <span>${label}</span>
+  </p>`
 
-  return _reset
+  if (classes.length > 0) {
+    button.classList.add(classes.join(' '))
+  }
+
+  return button
 }
