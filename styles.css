@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  outline: none;
 }
 
 :before,
@@ -9,12 +10,84 @@
   box-sizing: border-box;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+
+input {
+  border: 1px solid #CFCFCF;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  line-height: 2;
+  padding: 7px 12px;
+  transition: border .2s linear;
+}
+
+input:not([disabled]):active,
+input:not([disabled]):focus,
+input:not([disabled]):hover {
+  border: 1px solid #FF6600
+}
+
+input[disabled] {
+  background-color: F5F5F5;
+  cursor: not-allowed;
+}
+
+button[disabled] {
+  background-image: none;
+  background-color: #DDDDDD;
+  cursor: not-allowed;
+}
+
+button {
+  border-radius: 4px;
+  border: none;
+  background-image: linear-gradient(to bottom, #EF6C00, #C0661C);
+  color: #FFF;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 2;
+  padding: 7px 12px;
+}
+
 body {
+  color: #222;
   font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+header {
+  margin-top: 30px;
 }
 
 h1 {
   font-size: 1.5rem;
+  line-height: 2.125rem;
+  padding-bottom: 8px;
+  position: relative;
+  text-align: center;
+  margin: auto;
+  width: 265px;
+}
+
+h1:after {
+  background-color: #CFCFCF;
+  bottom: 0;
+  content: '';
+  height: 1px;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+  width: calc(100% - 42px);
+}
+
+h4 {
+  font-size: 1rem;
+  line-height: 2;
 }
 
 main {
@@ -27,6 +100,9 @@ main {
 
 article {
   flex: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 form div {
@@ -41,17 +117,60 @@ form button {
   margin-left: 8px;
 }
 
-#guessResult > * {
+#gameResult > * {
   display: flex;
   flex-flow: row wrap;
   height: 144px;
+  margin-bottom: 48px;
+  text-align: center;
 }
 
-#guessResult > * > * {
+#gameResult > * > * {
   width: 100%;
 }
 
-#guessResult > * > *:last-child {
+#gameResult > * > *:last-child {
   align-self: flex-end;
 }
+
+footer {
+  width: 300px;
+  margin: auto;
+}
+
+.error--color {
+  color: #CC3300;
+}
+
+.success--color {
+  color: #32BF00;
+}
+
+.primary--color {
+  color: #FF6600;
+}
+
+
+.icon {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+}
+
+.icon--reset {
+  background-image: url('./svg/icon/refresh.svg');
+}
+
+.reset {
+  background-image: linear-gradient(to bottom, #434854, #9E9E9E);
+}
+
+button > * {
+  display: flex;
+  justify-content: center;
+}
+
 
