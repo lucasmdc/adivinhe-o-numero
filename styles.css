@@ -1,15 +1,35 @@
 /* CSS Reset */
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
-  outline: none;
   font-family: inherit;
+  margin: 0;
+  outline: none;
+  padding: 0;
 }
 
 :before,
 :after {
   box-sizing: border-box;
+}
+
+:root {
+  --error: #CC3300;
+  --success: #32BF00;
+  --primary: #FF6600;
+  --primary-gradient00: #EF6C00;
+  --primary-gradient01: #C0661C;
+  --gray00: #FFFFFF;
+  --gray01: #F5F5F5;
+  --gray02: #DDDDDD;
+  --gray03: #CFCFCF;
+  --gray04:  #9E9E9E;
+  --gray05: #434854;
+  --gray08: #222222;
+  --gray09: #000000;
+}
+
+html {
+ font-size: 16px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -18,7 +38,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 input {
-  border: 1px solid #CFCFCF;
+  border: 1px solid var(--gray03);
   border-radius: 4px;
   font-size: 0.75rem;
   line-height: 2;
@@ -29,25 +49,25 @@ input {
 input:not([disabled]):active,
 input:not([disabled]):focus,
 input:not([disabled]):hover {
-  border: 1px solid #FF6600
+  border: 1px solid var(--primary)
 }
 
 input[disabled] {
-  background-color: #F5F5F5;
+  background-color: var(--gray01);
   cursor: not-allowed;
 }
 
 button[disabled] {
   background-image: none;
-  background-color: #DDDDDD;
+  background-color: var(--gray02);
   cursor: not-allowed;
 }
 
 button {
   border-radius: 4px;
   border: none;
-  background-image: linear-gradient(to bottom, #EF6C00, #C0661C);
-  color: #FFF;
+  background-image: linear-gradient(to bottom, var(--primary-gradient00), var(--primary-gradient01));
+  color: var(--gray00);
   cursor: pointer;
   font-size: 0.75rem;
   font-weight: 700;
@@ -61,7 +81,7 @@ button > * {
 }
 
 body {
-  color: #222;
+  color: var(--gray08);
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   font-weight: 400;
@@ -83,15 +103,15 @@ form div > *:not(:last-child) {
 
 /* Themes */
 .error--color {
-  color: #CC3300;
+  color: var(--error);
 }
 
 .success--color {
-  color: #32BF00;
+  color: var(--success);
 }
 
 .primary--color {
-  color: #FF6600;
+  color: var(--primary);
 }
 /* ====== */
 
@@ -134,7 +154,7 @@ form div > *:not(:last-child) {
 }
 
 .page__title {
-  background-image: linear-gradient(to bottom, #EF6C00, #C0661C);
+  background-image: linear-gradient(to bottom, var(--primary-gradient00), var(--primary-gradient01));
   -webkit-background-clip: text;
   -moz-background-clip: text;
   -webkit-text-fill-color: transparent; 
@@ -149,7 +169,7 @@ form div > *:not(:last-child) {
 }
 
 .page__title:after {
-  background-color: #CFCFCF;
+  background-color: var(--gray03);
   bottom: 0;
   content: '';
   height: 1px;
@@ -194,7 +214,7 @@ form div > *:not(:last-child) {
 }
 
 .game-result__reset {
-  background-image: linear-gradient(to bottom, #434854, #9E9E9E);
+  background-image: linear-gradient(to bottom, var(--gray05), var(--gray04));
   width: 132px;
 }
 
